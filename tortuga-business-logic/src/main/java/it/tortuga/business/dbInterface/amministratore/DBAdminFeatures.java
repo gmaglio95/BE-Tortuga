@@ -26,8 +26,8 @@ public class DBAdminFeatures extends DBWriterFactory {
 		return usersFeatures.deleteUser(user);
 	}
 
-	public User cambioRuoloApplicativoUtente(User user) {
-		return usersFeatures.cambioRuoloApplicativoUtente(user);
+	public User updateUser(User user) {
+		return usersFeatures.updateUser(user);
 	}
 
 	public Squadra insertNewTeam(Squadra team) {
@@ -38,4 +38,7 @@ public class DBAdminFeatures extends DBWriterFactory {
 		return istitutiFeatures.insertNewIstituto(istituto);
 	}
 
+	public User getUserById(User user) {
+		return usersFeatures.getUserById(user);
+	}
 }

@@ -35,7 +35,6 @@ public class TortugaUtility {
 				e.printStackTrace();
 			}
 
-			// }
 		}
 		if (nameField == null) {
 			for (Field field : fieldParent.getClass().getSuperclass().getDeclaredFields()) {

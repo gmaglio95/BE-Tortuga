@@ -3,8 +3,8 @@
  */
 package it.tortuga.business.dbInterface.amministratore;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.bson.Document;
 
@@ -15,7 +15,9 @@ import com.mongodb.util.JSON;
 import it.tortuga.beans.ErrorMessage;
 import it.tortuga.beans.TortugaUtility;
 import it.tortuga.beans.User;
+import it.tortuga.business.configuration.MapperBeans;
 import it.tortuga.business.dbInterface.DBWriterFactory;
+import it.tortuga.business.document.bean.DocumentIstitutoAllenamentoDTO;
 import it.tortuga.business.document.bean.DocumentSquadraDTO;
 import it.tortuga.business.document.bean.DocumentUserDTO;
 
@@ -27,16 +29,7 @@ public class DBAdminUsersFeatures extends DBWriterFactory {
 
 	public User insertNewUser(User user) {
 		try {
-			DocumentUserDTO userDocument = new DocumentUserDTO();
-			userDocument.setCodiceFiscale(user.getCodiceFiscale());
-			userDocument.setCognome(user.getCognome());
-			userDocument.setDataNascita(user.getDataNacita());
-			userDocument.set_id(user.get_id());
-			userDocument.setId_squadra(user.getSquadraAppartenenza().get_id());
-			userDocument.setNome(user.getNome());
-			userDocument.setPassword(TortugaUtility.getMD5Value(user.getPassword()));
-			userDocument.setRuolo(user.getRuolo() != null ? user.getRuolo().toString() : "");
-			userDocument.setRuoloApplicativo(user.getRuoloApplicativo().getRuolo());
+			DocumentUserDTO userDocument = MapperBeans.userToDocumentUser(user);
 			user_collection.insertOne((BasicDBObject) JSON.parse(gson.toJson(userDocument)));
 		} catch (MongoWriteException e) {
 			e.printStackTrace();
@@ -68,20 +61,40 @@ public class DBAdminUsersFeatures extends DBWriterFactory {
 		return removed != null;
 	}
 
-	public User cambioRuoloApplicativoUtente(User user) {
-		String nameField = TortugaUtility.getFieldName(user, user.getRuoloApplicativo());
+	public User updateUser(User user) {
 		BasicDBObject bsonFilter = new BasicDBObject(TortugaUtility.getFieldName(user, user.get_id()), user.get_id());
 		user_collection.updateOne(bsonFilter,
-				new Document("$set", new Document(nameField, JSON.parse(gson.toJson(user.getRuoloApplicativo())))));
+				(BasicDBObject) JSON.parse(gson.toJson(MapperBeans.userToDocumentUser(user))));
 		return user;
 	}
 
 	public User getUserById(User user) {
-		User userLogged = null;
+		DocumentUserDTO userLogged = null;
+		DocumentSquadraDTO teamUserLogged = null;
+		DocumentIstitutoAllenamentoDTO istitutoDocument = null;
+		List<DocumentUserDTO> usersTeam = new ArrayList<DocumentUserDTO>();
 		String nameField = TortugaUtility.getFieldName(user, user.get_id());
-		// userLogged = user_collection.find(new BasicDBObject(nameField,
-		// user.get_id()));
-		return userLogged;
+		for (BasicDBObject document : user_collection.find(new BasicDBObject(nameField, user.get_id()))) {
+			userLogged = gson.fromJson(document.toJson(), DocumentUserDTO.class);
+			String idSquadra = userLogged.getId_squadra();
+			String idFieldNameTeam = TortugaUtility.getFieldName(userLogged, idSquadra);
+			for (BasicDBObject team : team_collection.find(new BasicDBObject(idFieldNameTeam, idSquadra))) {
+				teamUserLogged = gson.fromJson(team.toJson(), DocumentSquadraDTO.class);
+				break;
+			}
+			String idIstituto = teamUserLogged.getId_istitutoAppartenenza();
+			for (BasicDBObject istituto : istituti_collection
+					.find(new BasicDBObject(TortugaUtility.getFieldName(teamUserLogged, idIstituto), idIstituto))) {
+				istitutoDocument = gson.fromJson(istituto.toJson(), DocumentIstitutoAllenamentoDTO.class);
+			}
+			for (BasicDBObject teamUser : user_collection.find(new BasicDBObject(
+					TortugaUtility.getFieldName(userLogged, userLogged.getId_squadra()), teamUserLogged.get_id()))) {
+				usersTeam.add(gson.fromJson(teamUser.toJson(), DocumentUserDTO.class));
+			}
+
+			break;
+		}
+		return MapperBeans.documentUserToUser(userLogged, teamUserLogged, istitutoDocument, usersTeam);
 	}
 
 }

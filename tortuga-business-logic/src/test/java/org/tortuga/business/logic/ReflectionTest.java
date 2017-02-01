@@ -23,24 +23,54 @@ public class ReflectionTest {
 		team.set_id("88");
 		user.setSquadraAppartenenza(team);
 		user.setCodiceFiscale("MGLGPP95T15E986Y");
-		user.setCognome("Maglio");
+		user.setCognome("Gesualdo");
 		user.set_id("giuseppe.maglio@hotmail.com");
-		user.setNome("Giuseppe");
+		user.setNome("Antonio");
 		user.setDataNacita(new Date());
 		user.setPassword("prova");
-		factory.deleteUser(user);
+		// factory.deleteUser(user);
+		// user.setRuoloApplicativo(RuoloApplicativo.AMMINISTRATORE);
+		// factory.insertNewUser(user);
 		user.setRuoloApplicativo(RuoloApplicativo.AMMINISTRATORE);
-		// factory.cambioRuoloApplicativoUtente(user);
-		factory.insertNewUser(user);
-		user.setRuoloApplicativo(RuoloApplicativo.PARTECIPANTE);
-		factory.cambioRuoloApplicativoUtente(user);
+		factory.updateUser(user);
+	}
+
+	@Test
+	public void insertUser() {
+		// User user = new User();
+		// Squadra team = new Squadra();
+		// user.setSquadraAppartenenza(team);
+		// user.setCodiceFiscale("MGLGPP95T15E986Y");
+		// user.setCognome("Maglio");
+		// user.set_id("giuseppe.maglio@hotmail.com");
+		// user.setNome("Giuseppe");
+		// user.setDataNacita(new Date());
+		// user.setPassword("prova");
 
 	}
 
 	@Test
-	public void testTeamReflection() {
-		// DBAdminFeatures factory = new DBAdminFeatures();
+	public void insertTeam() {
+
+	}
+
+	@Test
+	public void insertIstituto() {
+		IstitutoAllenamento istituto = new IstitutoAllenamento();
+	}
+
+	@Test
+	public void getUserByEmail() {
 		// User user = new User();
+		// user.set_id("giuseppe.maglio@hotmail.com");
+		// DBAdminFeatures factory = new DBAdminFeatures();
+		// user = factory.getUserById(user);
+	}
+
+	@Test
+	public void testTeamReflection() {
+		// User user = new User();
+		// DBAdminFeatures factory = new DBAdminFeatures();
 		// user.setCodiceFiscale("MGLGPP95T15E986Y");
 		// user.setCognome("Maglio");
 		// user.set_id("giuseppe.maglio@hotmail.com");

@@ -9,6 +9,7 @@ import com.mongodb.util.JSON;
 
 import it.tortuga.beans.ErrorMessage;
 import it.tortuga.beans.IstitutoAllenamento;
+import it.tortuga.business.configuration.MapperBeans;
 import it.tortuga.business.dbInterface.DBWriterFactory;
 import it.tortuga.business.document.bean.DocumentIstitutoAllenamentoDTO;
 
@@ -19,13 +20,7 @@ import it.tortuga.business.document.bean.DocumentIstitutoAllenamentoDTO;
 public class DBAdminIstitutiFeatures extends DBWriterFactory {
 
 	public IstitutoAllenamento insertNewIstituto(IstitutoAllenamento istituto) {
-		DocumentIstitutoAllenamentoDTO istitutoDocument = new DocumentIstitutoAllenamentoDTO();
-		istitutoDocument.set_id(istituto.get_id());
-		istitutoDocument.setCitta(istituto.getCitta());
-		istitutoDocument.setIndirizzo(istituto.getIndirizzo());
-		istitutoDocument.setNomeIstituto(istituto.getNomeIstituto());
-		istitutoDocument.setProvincia(istituto.getProvincia());
-		istitutoDocument.setId_squadraPresente(istituto.getSquadraPresente().get_id());
+		DocumentIstitutoAllenamentoDTO istitutoDocument = MapperBeans.istitutoToDocumentIstituto(istituto);
 		try {
 			istituti_collection.insertOne((BasicDBObject) JSON.parse(gson.toJson(istitutoDocument)));
 		} catch (MongoWriteException e) {

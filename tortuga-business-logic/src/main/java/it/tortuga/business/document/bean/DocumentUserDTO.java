@@ -2,6 +2,9 @@ package it.tortuga.business.document.bean;
 
 import java.util.Date;
 
+import it.tortuga.beans.RuoloApplicativo;
+import it.tortuga.beans.RuoloCampo;
+
 public class DocumentUserDTO {
 
 	private String nome;
@@ -9,8 +12,8 @@ public class DocumentUserDTO {
 	private String _id;
 	private String password;
 	private String codiceFiscale;
-	private String ruoloApplicativo;
-	private String ruolo;
+	private RuoloApplicativo ruoloApplicativo;
+	private RuoloCampo ruolo;
 	private Date dataNascita;
 	private String id_squadra;
 
@@ -54,22 +57,6 @@ public class DocumentUserDTO {
 		this.codiceFiscale = codiceFiscale;
 	}
 
-	public String getRuoloApplicativo() {
-		return ruoloApplicativo;
-	}
-
-	public void setRuoloApplicativo(String ruoloApplicativo) {
-		this.ruoloApplicativo = ruoloApplicativo;
-	}
-
-	public String getRuolo() {
-		return ruolo;
-	}
-
-	public void setRuolo(String ruolo) {
-		this.ruolo = ruolo;
-	}
-
 	public Date getDataNascita() {
 		return dataNascita;
 	}
@@ -86,4 +73,19 @@ public class DocumentUserDTO {
 		this.id_squadra = id_squadra;
 	}
 
+	public RuoloApplicativo getRuoloApplicativo() {
+		return ruoloApplicativo;
+	}
+
+	public void setRuoloApplicativo(RuoloApplicativo ruoloApplicativo) {
+		this.ruoloApplicativo = ruoloApplicativo;
+	}
+
+	public RuoloCampo getRuolo() {
+		return ruolo;
+	}
+
+	public void setRuolo(RuoloCampo ruolo) {
+		this.ruolo = ruolo;
+	}
 }
