@@ -2,7 +2,7 @@ package it.tortuga.beans;
 
 public class IstitutoAllenamento extends GeneralBean{
 
-	private String _id;
+	
 	private String nomeIstituto;
 	private String citta;
 	private String provincia;
@@ -38,14 +38,6 @@ public class IstitutoAllenamento extends GeneralBean{
 
 	public void setIndirizzo(String indirizzo) {
 		this.indirizzo = indirizzo;
-	}
-
-	public String get_id() {
-		return _id;
-	}
-
-	public void set_id(String _id) {
-		this._id = _id;
 	}
 
 }

@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Squadra extends GeneralBean{
 
-	private String _id;
 	private String nomeSquadra;
 	private Date dataCreazione;
 	private List<User> listaPartecipanti;
@@ -42,12 +41,5 @@ public class Squadra extends GeneralBean{
 	public void setIstitutoAppartenenza(IstitutoAllenamento istitutoAppartenenza) {
 		this.istitutoAppartenenza = istitutoAppartenenza;
 	}
-
-	public String get_id() {
-		return _id;
-	}
-
-	public void set_id(String _id) {
-		this._id = _id;
-	}
+	
 }

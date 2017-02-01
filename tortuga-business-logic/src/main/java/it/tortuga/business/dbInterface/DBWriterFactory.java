@@ -15,6 +15,7 @@ public abstract class DBWriterFactory {
 	protected MongoClient client;
 	protected MongoDatabase db;
 
+
 	protected MongoCollection<BasicDBObject> user_collection;
 	protected MongoCollection<BasicDBObject> team_collection;
 	protected MongoCollection<BasicDBObject> istituti_collection;

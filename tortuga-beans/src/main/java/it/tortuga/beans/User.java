@@ -6,7 +6,6 @@ public class User extends GeneralBean {
 
 	private String nome;
 	private String cognome;
-	private String _id;
 	private String password;
 	private String codiceFiscale;
 	private RuoloApplicativo ruoloApplicativo;
@@ -77,13 +76,4 @@ public class User extends GeneralBean {
 	public void setSquadraAppartenenza(Squadra squadraAppartenenza) {
 		this.squadraAppartenenza = squadraAppartenenza;
 	}
-
-	public String get_id() {
-		return _id;
-	}
-
-	public void set_id(String _id) {
-		this._id = _id;
-	}
-
 }

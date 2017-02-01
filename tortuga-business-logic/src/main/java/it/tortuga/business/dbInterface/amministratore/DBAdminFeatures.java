@@ -32,7 +32,7 @@ public class DBAdminFeatures extends DBWriterFactory {
 			userDocument.setId_squadra(user.getSquadraAppartenenza().get_id());
 			userDocument.setNome(user.getNome());
 			userDocument.setPassword(user.getPassword());
-			userDocument.setRuolo(user.getRuolo().toString());
+			userDocument.setRuolo(user.getRuolo() != null ? user.getRuolo().toString() : "");
 			userDocument.setRuoloApplicativo(user.getRuoloApplicativo().getRuolo());
 			user_collection.insertOne((BasicDBObject) JSON.parse(gson.toJson(userDocument)));
 
@@ -70,17 +70,23 @@ public class DBAdminFeatures extends DBWriterFactory {
 		// l'utente non è stato trovato
 		// tornerà un valore null, ecco il perchè del return finale.
 		BasicDBObject removed = user_collection.findOneAndDelete((BasicDBObject) JSON.parse(gson.toJson(user)));
+		user_collection.find((BasicDBObject) JSON.parse(gson.toJson(user)));
 		for (BasicDBObject document : team_collection.find()) {
 			String idSquadraAppartenenza = user.getSquadraAppartenenza().get_id();
 			if (document.containsField(idSquadraAppartenenza)) {
-				
+				DocumentSquadraDTO documentTeam = gson.fromJson(document.toJson(), DocumentSquadraDTO.class);
+				documentTeam.getId_users().remove(user.get_id());
+				BasicDBObject newTeamModify = (BasicDBObject) document.clone();
+				newTeamModify.replace(TortugaUtility.getFieldName(documentTeam, documentTeam.getId_users()),
+						documentTeam.getId_users());
+				team_collection.updateOne(document, newTeamModify);
 			}
 		}
 		return removed != null;
 	}
 
 	public User cambioRuoloApplicativoUtente(User user) {
-		String nameField = TortugaUtility.getFieldName(user, RuoloApplicativo.class);
+		String nameField = TortugaUtility.getFieldName(user, user.getRuoloApplicativo());
 		if (nameField != null) {
 			for (BasicDBObject document : user_collection.find()) {
 				if (document.containsValue(user.getCodiceFiscale())) {

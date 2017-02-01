@@ -17,4 +17,5 @@ public enum RuoloApplicativo {
 	public void setRuolo(String ruolo) {
 		this.ruolo = ruolo;
 	}
+
 }
