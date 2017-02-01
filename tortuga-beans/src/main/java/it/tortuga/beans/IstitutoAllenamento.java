@@ -1,12 +1,12 @@
 package it.tortuga.beans;
 
-public class IstitutoAllenamento extends GeneralBean{
+public class IstitutoAllenamento extends GeneralBean {
 
-	
 	private String nomeIstituto;
 	private String citta;
 	private String provincia;
 	private String indirizzo;
+	private Squadra squadraPresente;
 
 	public String getNomeIstituto() {
 		return nomeIstituto;
@@ -38,6 +38,14 @@ public class IstitutoAllenamento extends GeneralBean{
 
 	public void setIndirizzo(String indirizzo) {
 		this.indirizzo = indirizzo;
+	}
+
+	public Squadra getSquadraPresente() {
+		return squadraPresente;
+	}
+
+	public void setSquadraPresente(Squadra squadraPresente) {
+		this.squadraPresente = squadraPresente;
 	}
 
 }

@@ -1,102 +1,41 @@
 package it.tortuga.business.dbInterface.amministratore;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.MongoWriteException;
-import com.mongodb.util.JSON;
-
-import it.tortuga.beans.ErrorMessage;
-import it.tortuga.beans.RuoloApplicativo;
+import it.tortuga.beans.IstitutoAllenamento;
 import it.tortuga.beans.Squadra;
-import it.tortuga.beans.TortugaUtility;
 import it.tortuga.beans.User;
 import it.tortuga.business.dbInterface.DBWriterFactory;
-import it.tortuga.business.document.bean.DocumentSquadraDTO;
-import it.tortuga.business.document.bean.DocumentUserDTO;
 
 public class DBAdminFeatures extends DBWriterFactory {
 
+	private DBAdminTeamFeatures teamFeatures;
+	private DBAdminUsersFeatures usersFeatures;
+	private DBAdminIstitutiFeatures istitutiFeatures;
+
 	public DBAdminFeatures() {
 		super();
+		teamFeatures = new DBAdminTeamFeatures();
+		usersFeatures = new DBAdminUsersFeatures();
+		istitutiFeatures = new DBAdminIstitutiFeatures();
 	}
 
 	public User insertNewUser(User user) {
-		try {
-			DocumentUserDTO userDocument = new DocumentUserDTO();
-			userDocument.setCodiceFiscale(user.getCodiceFiscale());
-			userDocument.setCognome(user.getCognome());
-			userDocument.setDataNascita(user.getDataNacita());
-			userDocument.set_id(user.get_id());
-			userDocument.setId_squadra(user.getSquadraAppartenenza().get_id());
-			userDocument.setNome(user.getNome());
-			userDocument.setPassword(user.getPassword());
-			userDocument.setRuolo(user.getRuolo() != null ? user.getRuolo().toString() : "");
-			userDocument.setRuoloApplicativo(user.getRuoloApplicativo().getRuolo());
-			user_collection.insertOne((BasicDBObject) JSON.parse(gson.toJson(userDocument)));
-
-		} catch (MongoWriteException e) {
-			e.printStackTrace();
-			User userToSend = new User();
-			userToSend.setErrorDescriptors(new ErrorMessage("Utente già registrato"));
-			return userToSend;
-		}
-		return user;
-	}
-
-	public Squadra insertNewTeam(Squadra team) {
-		DocumentSquadraDTO teamDocument = new DocumentSquadraDTO();
-		teamDocument.set_id(team.get_id());
-		teamDocument.setDataCreazione(team.getDataCreazione());
-		teamDocument.setId_istitutoAppartenenza(team.getIstitutoAppartenenza().get_id());
-		teamDocument.setNomeSquadra(team.getNomeSquadra());
-		List<String> id_users = new ArrayList<>();
-		for (User user : team.getListaPartecipanti()) {
-			id_users.add(user.get_id());
-		}
-		teamDocument.setId_users(id_users);
-		try {
-			team_collection.insertOne((BasicDBObject) JSON.parse(gson.toJson(teamDocument)));
-		} catch (MongoWriteException e) {
-			Squadra teamToSend = new Squadra();
-			teamToSend.setErrorDescriptors(new ErrorMessage("Squadra Gia' esistente"));
-		}
-		return team;
+		return usersFeatures.insertNewUser(user);
 	}
 
 	public Boolean deleteUser(User user) {
-		// gmaglio : il metodo ritorna il Document che è stato eliminato, se
-		// l'utente non è stato trovato
-		// tornerà un valore null, ecco il perchè del return finale.
-		BasicDBObject removed = user_collection.findOneAndDelete((BasicDBObject) JSON.parse(gson.toJson(user)));
-		user_collection.find((BasicDBObject) JSON.parse(gson.toJson(user)));
-		for (BasicDBObject document : team_collection.find()) {
-			String idSquadraAppartenenza = user.getSquadraAppartenenza().get_id();
-			if (document.containsField(idSquadraAppartenenza)) {
-				DocumentSquadraDTO documentTeam = gson.fromJson(document.toJson(), DocumentSquadraDTO.class);
-				documentTeam.getId_users().remove(user.get_id());
-				BasicDBObject newTeamModify = (BasicDBObject) document.clone();
-				newTeamModify.replace(TortugaUtility.getFieldName(documentTeam, documentTeam.getId_users()),
-						documentTeam.getId_users());
-				team_collection.updateOne(document, newTeamModify);
-			}
-		}
-		return removed != null;
+		return usersFeatures.deleteUser(user);
 	}
 
 	public User cambioRuoloApplicativoUtente(User user) {
-		String nameField = TortugaUtility.getFieldName(user, user.getRuoloApplicativo());
-		if (nameField != null) {
-			for (BasicDBObject document : user_collection.find()) {
-				if (document.containsValue(user.getCodiceFiscale())) {
-					document.replace(nameField, user.getRuoloApplicativo());
-					user_collection.findOneAndUpdate(document, document);
-				}
-			}
-		}
+		return usersFeatures.cambioRuoloApplicativoUtente(user);
+	}
 
-		return user;
+	public Squadra insertNewTeam(Squadra team) {
+		return teamFeatures.insertNewTeam(team);
+	}
+
+	public IstitutoAllenamento insertNewIstituto(IstitutoAllenamento istituto) {
+		return istitutiFeatures.insertNewIstituto(istituto);
 	}
 
 }

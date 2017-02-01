@@ -7,6 +7,7 @@ public class DocumentIstitutoAllenamentoDTO {
 	private String citta;
 	private String provincia;
 	private String indirizzo;
+	private String id_squadraPresente;
 
 	public String get_id() {
 		return _id;
@@ -46,6 +47,14 @@ public class DocumentIstitutoAllenamentoDTO {
 
 	public void setIndirizzo(String indirizzo) {
 		this.indirizzo = indirizzo;
+	}
+
+	public String getId_squadraPresente() {
+		return id_squadraPresente;
+	}
+
+	public void setId_squadraPresente(String id_squadraPresente) {
+		this.id_squadraPresente = id_squadraPresente;
 	}
 
 }
