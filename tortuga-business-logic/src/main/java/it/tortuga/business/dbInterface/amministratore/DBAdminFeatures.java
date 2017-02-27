@@ -1,5 +1,6 @@
 package it.tortuga.business.dbInterface.amministratore;
 
+import it.tortuga.beans.ErrorMessage;
 import it.tortuga.beans.IstitutoAllenamento;
 import it.tortuga.beans.Squadra;
 import it.tortuga.beans.User;
@@ -19,26 +20,65 @@ public class DBAdminFeatures extends DBWriterFactory {
 	}
 
 	public User insertNewUser(User user) {
-		return usersFeatures.insertNewUser(user);
+
+		user = usersFeatures.insertNewUser(user);
+
+		return user;
 	}
 
 	public Boolean deleteUser(User user) {
-		return usersFeatures.deleteUser(user);
+
+		Boolean isDeleted = usersFeatures.deleteUser(user);
+
+		return isDeleted;
 	}
 
 	public User updateUser(User user) {
-		return usersFeatures.updateUser(user);
+
+		user = usersFeatures.updateUser(user);
+
+		return user;
+	}
+
+	public Boolean deleteTeam(Squadra team) {
+		return teamFeatures.deleteTeam(team);
 	}
 
 	public Squadra insertNewTeam(Squadra team) {
-		return teamFeatures.insertNewTeam(team);
+
+		team = teamFeatures.insertNewTeam(team);
+
+		return team;
 	}
 
 	public IstitutoAllenamento insertNewIstituto(IstitutoAllenamento istituto) {
-		return istitutiFeatures.insertNewIstituto(istituto);
+
+		istituto = istitutiFeatures.insertNewIstituto(istituto);
+
+		return istituto;
 	}
 
 	public User getUserById(User user) {
-		return usersFeatures.getUserById(user);
+
+		user = usersFeatures.getUserById(user);
+
+		return user;
 	}
+
+	public User loginUser(User user) {
+
+		user = usersFeatures.loginUser(user);
+
+		return user;
+	}
+
+	public Squadra getTeamById(String idTeam, Boolean avversario) {
+		return teamFeatures.getTeamById(idTeam, avversario);
+	}
+
+	public User changePasswordUser(User user) {
+		User userToSend = usersFeatures.updateUser(user);
+		return userToSend;
+	}
+
 }

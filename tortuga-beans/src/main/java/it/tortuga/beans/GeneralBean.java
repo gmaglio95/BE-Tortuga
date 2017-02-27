@@ -3,17 +3,21 @@
  */
 package it.tortuga.beans;
 
+import java.io.Serializable;
+
 /**
  * @author pc ads
  *
  */
-public abstract class GeneralBean {
+public abstract class GeneralBean implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7762091563452044942L;
 	private ErrorMessage errorDescriptors;
 	private String _id;
 
-	
-	
 	public ErrorMessage getErrorDescriptors() {
 		return errorDescriptors;
 	}

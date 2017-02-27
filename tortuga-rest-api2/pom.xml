@@ -15,6 +15,16 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>it.tortuga</groupId>
+			<artifactId>tortuga-beans</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>it.tortuga</groupId>
+			<artifactId>tortuga-business-logic</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 	<packaging>war</packaging>
 </project>

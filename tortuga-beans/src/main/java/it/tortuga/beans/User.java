@@ -11,7 +11,7 @@ public class User extends GeneralBean {
 	private RuoloApplicativo ruoloApplicativo;
 	private RuoloCampo ruolo;
 	private Date dataNacita;
-	private Squadra squadraAppartenenza;
+	private String squadraAppartenenza;
 
 	public String getNome() {
 		return nome;
@@ -69,11 +69,12 @@ public class User extends GeneralBean {
 		this.password = password;
 	}
 
-	public Squadra getSquadraAppartenenza() {
+	public String getSquadraAppartenenza() {
 		return squadraAppartenenza;
 	}
 
-	public void setSquadraAppartenenza(Squadra squadraAppartenenza) {
+	public void setSquadraAppartenenza(String squadraAppartenenza) {
 		this.squadraAppartenenza = squadraAppartenenza;
 	}
+
 }

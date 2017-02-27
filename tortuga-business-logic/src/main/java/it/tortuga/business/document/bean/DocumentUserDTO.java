@@ -14,7 +14,7 @@ public class DocumentUserDTO {
 	private String codiceFiscale;
 	private RuoloApplicativo ruoloApplicativo;
 	private RuoloCampo ruolo;
-	private Date dataNascita;
+	private long dataNascita;
 	private String id_squadra;
 
 	public String getNome() {
@@ -57,14 +57,6 @@ public class DocumentUserDTO {
 		this.codiceFiscale = codiceFiscale;
 	}
 
-	public Date getDataNascita() {
-		return dataNascita;
-	}
-
-	public void setDataNascita(Date dataNascita) {
-		this.dataNascita = dataNascita;
-	}
-
 	public String getId_squadra() {
 		return id_squadra;
 	}
@@ -87,5 +79,13 @@ public class DocumentUserDTO {
 
 	public void setRuolo(RuoloCampo ruolo) {
 		this.ruolo = ruolo;
+	}
+
+	public long getDataNascita() {
+		return dataNascita;
+	}
+
+	public void setDataNascita(long dataNascita) {
+		this.dataNascita = dataNascita;
 	}
 }

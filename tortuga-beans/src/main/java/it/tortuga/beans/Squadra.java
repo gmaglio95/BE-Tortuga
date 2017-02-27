@@ -3,11 +3,11 @@ package it.tortuga.beans;
 import java.util.Date;
 import java.util.List;
 
-public class Squadra extends GeneralBean{
+public class Squadra extends GeneralBean {
 
 	private String nomeSquadra;
 	private Date dataCreazione;
-	private List<User> listaPartecipanti;
+	private List<String> listaPartecipanti;
 	private IstitutoAllenamento istitutoAppartenenza;
 
 	public String getNomeSquadra() {
@@ -26,14 +26,6 @@ public class Squadra extends GeneralBean{
 		this.dataCreazione = dataCreazione;
 	}
 
-	public List<User> getListaPartecipanti() {
-		return listaPartecipanti;
-	}
-
-	public void setListaPartecipanti(List<User> listaPartecipanti) {
-		this.listaPartecipanti = listaPartecipanti;
-	}
-
 	public IstitutoAllenamento getIstitutoAppartenenza() {
 		return istitutoAppartenenza;
 	}
@@ -41,5 +33,13 @@ public class Squadra extends GeneralBean{
 	public void setIstitutoAppartenenza(IstitutoAllenamento istitutoAppartenenza) {
 		this.istitutoAppartenenza = istitutoAppartenenza;
 	}
-	
+
+	public List<String> getListaPartecipanti() {
+		return listaPartecipanti;
+	}
+
+	public void setListaPartecipanti(List<String> listaPartecipanti) {
+		this.listaPartecipanti = listaPartecipanti;
+	}
+
 }

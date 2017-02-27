@@ -7,7 +7,7 @@ public class DocumentSquadraDTO {
 
 	private String _id;
 	private String nomeSquadra;
-	private Date dataCreazione;
+	private long dataCreazione;
 	private List<String> id_users;
 	private String id_istitutoAppartenenza;
 
@@ -17,14 +17,6 @@ public class DocumentSquadraDTO {
 
 	public void setNomeSquadra(String nomeSquadra) {
 		this.nomeSquadra = nomeSquadra;
-	}
-
-	public Date getDataCreazione() {
-		return dataCreazione;
-	}
-
-	public void setDataCreazione(Date dataCreazione) {
-		this.dataCreazione = dataCreazione;
 	}
 
 	public String get_id() {
@@ -49,6 +41,14 @@ public class DocumentSquadraDTO {
 
 	public void setId_istitutoAppartenenza(String id_istitutoAppartenenza) {
 		this.id_istitutoAppartenenza = id_istitutoAppartenenza;
+	}
+
+	public long getDataCreazione() {
+		return dataCreazione;
+	}
+
+	public void setDataCreazione(long dataCreazione) {
+		this.dataCreazione = dataCreazione;
 	}
 
 }

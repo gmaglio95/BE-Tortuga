@@ -6,7 +6,7 @@ public class IstitutoAllenamento extends GeneralBean {
 	private String citta;
 	private String provincia;
 	private String indirizzo;
-	private Squadra squadraPresente;
+	private String squadraPresente;
 
 	public String getNomeIstituto() {
 		return nomeIstituto;
@@ -40,12 +40,13 @@ public class IstitutoAllenamento extends GeneralBean {
 		this.indirizzo = indirizzo;
 	}
 
-	public Squadra getSquadraPresente() {
+	public String getSquadraPresente() {
 		return squadraPresente;
 	}
 
-	public void setSquadraPresente(Squadra squadraPresente) {
+	public void setSquadraPresente(String squadraPresente) {
 		this.squadraPresente = squadraPresente;
 	}
+
 
 }
