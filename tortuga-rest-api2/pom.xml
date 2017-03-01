@@ -11,8 +11,10 @@
 	<artifactId>tortuga-rest-api</artifactId>
 	<name>tortuga-rest-api</name>
 	<url>http://maven.apache.org</url>
+
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- The main class to start by executing java -jar -->
+		<start-class>org.tortuga.rest.api2.Application</start-class>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -20,11 +22,24 @@
 			<artifactId>tortuga-beans</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>it.tortuga</groupId>
 			<artifactId>tortuga-business-logic</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
-	<packaging>war</packaging>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 </project>

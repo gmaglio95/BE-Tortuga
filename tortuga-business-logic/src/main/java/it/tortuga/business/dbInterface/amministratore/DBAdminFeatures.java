@@ -1,9 +1,9 @@
 package it.tortuga.business.dbInterface.amministratore;
 
-import it.tortuga.beans.ErrorMessage;
 import it.tortuga.beans.IstitutoAllenamento;
 import it.tortuga.beans.Squadra;
 import it.tortuga.beans.User;
+import it.tortuga.business.configuration.MailSender;
 import it.tortuga.business.dbInterface.DBWriterFactory;
 
 public class DBAdminFeatures extends DBWriterFactory {

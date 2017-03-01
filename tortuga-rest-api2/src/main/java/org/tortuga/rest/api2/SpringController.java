@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import it.tortuga.beans.ElementToUpdateBean;
+import it.tortuga.beans.TortugaUtility;
 import it.tortuga.beans.User;
 import it.tortuga.business.dbInterface.amministratore.DBAdminFeatures;
 
@@ -30,15 +31,17 @@ public class SpringController {
 
 	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
 	@ResponseBody
-	public User changePassword(@RequestBody ElementToUpdateBean beanChangePassword) {
+	public ElementToUpdateBean changePassword(@RequestBody ElementToUpdateBean beanChangeElement) {
 		DBAdminFeatures factory = new DBAdminFeatures();
-		User userToSend = factory.loginUser(beanChangePassword.getUser());
+		User userToSend = factory.loginUser(beanChangeElement.getUser());
 		if (userToSend.getErrorDescriptors() == null) {
-			beanChangePassword.getUser().setPassword(beanChangePassword.getElementToUpdate());
-			factory.changePasswordUser(beanChangePassword.getUser());
-			userToSend = factory.changePasswordUser(beanChangePassword.getUser());
+			beanChangeElement.getUser().setPassword(TortugaUtility.getMD5Value(beanChangeElement.getElementToUpdate()));
+			userToSend = factory.changePasswordUser(beanChangeElement.getUser());
+			beanChangeElement.setUser(userToSend);
+		} else {
+			beanChangeElement.setErrorDescriptors(userToSend.getErrorDescriptors());
 		}
-		return userToSend;
+		return beanChangeElement;
 	}
 
 }
