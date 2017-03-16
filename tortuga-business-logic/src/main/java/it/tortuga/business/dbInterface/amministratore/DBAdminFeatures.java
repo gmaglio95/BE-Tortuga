@@ -1,9 +1,12 @@
 package it.tortuga.business.dbInterface.amministratore;
 
+import java.util.List;
+
+import it.tortuga.beans.FilterGeneralBean;
+import it.tortuga.beans.GeneralBean;
 import it.tortuga.beans.IstitutoAllenamento;
 import it.tortuga.beans.Squadra;
 import it.tortuga.beans.User;
-import it.tortuga.business.configuration.MailSender;
 import it.tortuga.business.dbInterface.DBWriterFactory;
 
 public class DBAdminFeatures extends DBWriterFactory {
@@ -17,6 +20,10 @@ public class DBAdminFeatures extends DBWriterFactory {
 		teamFeatures = new DBAdminTeamFeatures();
 		usersFeatures = new DBAdminUsersFeatures();
 		istitutiFeatures = new DBAdminIstitutiFeatures();
+	}
+
+	public List<User> listUserByFilter(FilterGeneralBean filter) {
+		return usersFeatures.listUserByParameters(filter);
 	}
 
 	public User insertNewUser(User user) {

@@ -7,9 +7,7 @@ public class MongoClientFactory {
 	private static MongoClient client;
 
 	public static MongoClient getMongoClientInstance() {
-		if (client == null) {
-			client = new MongoClient(MongoDBConnectionInfo.URL_CONNECTION);
-		}
+		client = new MongoClient(MongoDBConnectionInfo.URL_CONNECTION);
 		return client;
 	}
 

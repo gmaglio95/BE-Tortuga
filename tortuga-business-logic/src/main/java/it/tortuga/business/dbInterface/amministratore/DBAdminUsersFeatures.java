@@ -3,14 +3,20 @@
  */
 package it.tortuga.business.dbInterface.amministratore;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bson.Document;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoWriteException;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.result.UpdateResult;
 import com.mongodb.util.JSON;
 
 import it.tortuga.beans.ErrorMessage;
+import it.tortuga.beans.FieldType;
+import it.tortuga.beans.FilterGeneralBean;
 import it.tortuga.beans.TortugaUtility;
 import it.tortuga.beans.User;
 import it.tortuga.business.dbInterface.DBWriterFactory;
@@ -21,6 +27,31 @@ import it.tortuga.business.document.bean.DocumentSquadraDTO;
  *
  */
 public class DBAdminUsersFeatures extends DBWriterFactory {
+
+	private String id_team_field;
+
+	public DBAdminUsersFeatures() {
+		User user = new User();
+		user.setSquadraAppartenenza("1");
+		id_team_field = TortugaUtility.getFieldName(user, user.getSquadraAppartenenza());
+	}
+
+	public List<User> listUserByParameters(FilterGeneralBean filter) {
+		List<User> users = new ArrayList<>();
+		FindIterable<BasicDBObject> listDocumentUsers;
+		if (filter.getFildToFilter() != null) {
+			String fieldToFilter = filter.getFildToFilter().equals(FieldType.ID) ? nameIdField : id_team_field;
+			BasicDBObject bsonFilter = new BasicDBObject(fieldToFilter, filter.getField());
+			listDocumentUsers = user_collection.find(bsonFilter);
+		} else {
+			listDocumentUsers = user_collection.find();
+		}
+
+		for (BasicDBObject user : listDocumentUsers) {
+			users.add(gson.fromJson(user.toString(), User.class));
+		}
+		return users;
+	}
 
 	public User insertNewUser(User user) {
 		try {
@@ -68,11 +99,13 @@ public class DBAdminUsersFeatures extends DBWriterFactory {
 		for (BasicDBObject document : user_collection.find(new BasicDBObject(nameIdField, user.get_id()))) {
 			find = true;
 			userToSend = gson.fromJson(document.toString(), User.class);
-			if (!find) {
-				userToSend = new User();
-				userToSend.setErrorDescriptors(new ErrorMessage("Nome utente o password inesistenti"));
-				return userToSend;
-			}
+			// ELIMINATA PASSWORD PER SICUREZZA
+			userToSend.setPassword("");
+		}
+		if (!find) {
+			userToSend = new User();
+			userToSend.setErrorDescriptors(new ErrorMessage("Nome utente o password inesistenti"));
+			return userToSend;
 		}
 		return userToSend;
 	}

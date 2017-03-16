@@ -3,15 +3,11 @@
  */
 package it.tortuga.business.dbInterface.amministratore;
 
-import com.mongodb.BasicDBObject;
 import com.mongodb.MongoWriteException;
-import com.mongodb.util.JSON;
 
 import it.tortuga.beans.ErrorMessage;
 import it.tortuga.beans.IstitutoAllenamento;
-import it.tortuga.business.configuration.MapperBeans;
 import it.tortuga.business.dbInterface.DBWriterFactory;
-import it.tortuga.business.document.bean.DocumentIstitutoAllenamentoDTO;
 
 /**
  * @author pc ads
