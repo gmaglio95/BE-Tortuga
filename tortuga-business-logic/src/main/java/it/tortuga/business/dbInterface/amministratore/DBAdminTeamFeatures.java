@@ -3,6 +3,8 @@
  */
 package it.tortuga.business.dbInterface.amministratore;
 
+import java.util.List;
+
 import org.bson.Document;
 
 import com.mongodb.BasicDBObject;
@@ -30,6 +32,10 @@ public class DBAdminTeamFeatures extends DBWriterFactory {
 				IstitutoAllenamento istituto = team.getIstitutoAppartenenza();
 				BasicDBObject filter = new BasicDBObject(TortugaUtility.getFieldName(istituto, istituto.get_id()),
 						istituto.get_id());
+				istituti_collection.findOneAndUpdate(filter,
+						new Document("$set",
+								new Document(TortugaUtility.getFieldName(istituto, istituto.getSquadraPresente()),
+										istituto.getSquadraPresente())));
 			}
 		} catch (MongoWriteException e) {
 			Squadra teamToSend = new Squadra();
@@ -61,17 +67,27 @@ public class DBAdminTeamFeatures extends DBWriterFactory {
 		Squadra squadra = null;
 
 		BasicDBObject filter = new BasicDBObject(this.nameIdField, idTeam);
-		Squadra team = gson.fromJson(team_collection.find(filter).first().toString(), Squadra.class);
-		if (team != null) {
-			filter = new BasicDBObject(nameIdField, team.getIstitutoAppartenenza().get_id());
-			IstitutoAllenamento istituto = gson
-					.fromJson(team_collection.find(filter).first().toString(), IstitutoAllenamento.class);
-			filter = new BasicDBObject(nameIdField, team.get_id());
-		} else {
+		squadra = gson.fromJson(team_collection.find(filter).first().toString(), Squadra.class);
+		if (squadra == null) {
 			squadra = new Squadra();
-			squadra.setErrorDescriptors(new ErrorMessage("Team non esistente!"));
+			squadra.setErrorDescriptors(new ErrorMessage("Squadra Inesistente!"));
 		}
 		return squadra;
+	}
+
+	public Squadra updateTeam(Squadra updateTeam) {
+		BasicDBObject filter = new BasicDBObject(this.nameIdField, updateTeam.get_id());
+		BasicDBObject replaced = team_collection.findOneAndReplace(filter,
+				(BasicDBObject) JSON.parse(gson.toJson(updateTeam)));
+		if (replaced != null && updateTeam.getIstitutoAppartenenza() != null) {
+			filter = new BasicDBObject(this.nameIdField, updateTeam.getIstitutoAppartenenza().get_id());
+			replaced = istituti_collection.findOneAndReplace(filter,
+					(BasicDBObject) JSON.parse(gson.toJson(updateTeam.getIstitutoAppartenenza())));
+		} else {
+			updateTeam = new Squadra();
+			updateTeam.setErrorDescriptors(new ErrorMessage("Update del team non riuscito"));
+		}
+		return updateTeam;
 	}
 
 }

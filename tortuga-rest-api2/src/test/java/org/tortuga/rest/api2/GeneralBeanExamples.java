@@ -55,7 +55,7 @@ public class GeneralBeanExamples {
 
 	public static IstitutoAllenamento getIstitutoExample() {
 		IstitutoAllenamento istituto = new IstitutoAllenamento();
-		istituto.set_id("2");
+		istituto.set_id("4");
 		istituto.setCitta("Roma");
 		istituto.setIndirizzo("Viale africa 140");
 		istituto.setNomeIstituto("RUIZ");

@@ -5,6 +5,7 @@ package org.tortuga.rest.api2;
 
 import org.junit.Test;
 
+import it.tortuga.beans.Squadra;
 import it.tortuga.beans.User;
 import it.tortuga.business.dbInterface.amministratore.DBAdminFeatures;
 
@@ -16,29 +17,41 @@ public class UnitFilterTest {
 
 	private DBAdminFeatures admin = new DBAdminFeatures();
 
+	public void createTeam() {
+		Squadra team = admin.insertNewTeam(GeneralBeanExamples.getTeamExample());
+		if (team.getErrorDescriptors() == null) {
+			System.out.println("TEAM INSERT SUCCESFULLY");
+		}
+	}
+
+	public void getTeam() {
+		Squadra team = admin.getTeamById(GeneralBeanExamples.getTeamExample().get_id(), false);
+		if(team.getErrorDescriptors()==null){
+			System.out.println("TEAM RECOVER SUCCESFULLY");
+		}
+	}
+	public void deleteTeam(){
+		Boolean team = admin.deleteTeam(GeneralBeanExamples.getTeamExample());
+		if(team){
+			System.out.println("TEAM DELETED");
+		}
+	}
+	
 	@Test
-	public void filterByType() {
-		// FilterGeneralBean bean = new FilterGeneralBean();
-		//
-		// bean.setField("88");
-		// bean.setType(BeanType.USER);
-		// bean.setFildToFilter(FieldType.TEAM);
-		// DBAdminFeatures factory = new DBAdminFeatures();
-		//
-		// List<User> users = factory.listUserByFilter(null);
-		// for (User us : users) {
-		// System.out.println(us.get_id());
-		// }
+	public void CRUDSquadra() {
+		createTeam();
+		getTeam();
+		deleteTeam();
 	}
 
 	@Test
 	public void CRUDUser() {
-		createUser();
-		deleteUser();
-		createUser();
-		updateUser();
-		getUser();
-		deleteUser();
+//		createUser();
+//		deleteUser();
+//		createUser();
+//		updateUser();
+//		getUser();
+//		deleteUser();
 	}
 
 	public void getUser() {
@@ -70,6 +83,21 @@ public class UnitFilterTest {
 		if (removed) {
 			System.out.println("DELETE USER OK");
 		}
+	}
+
+	@Test
+	public void filterByType() {
+		// FilterGeneralBean bean = new FilterGeneralBean();
+		//
+		// bean.setField("88");
+		// bean.setType(BeanType.USER);
+		// bean.setFildToFilter(FieldType.TEAM);
+		// DBAdminFeatures factory = new DBAdminFeatures();
+		//
+		// List<User> users = factory.listUserByFilter(null);
+		// for (User us : users) {
+		// System.out.println(us.get_id());
+		// }
 	}
 
 }

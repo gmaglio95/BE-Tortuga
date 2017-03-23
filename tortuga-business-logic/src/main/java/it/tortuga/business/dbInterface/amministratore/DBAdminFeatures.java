@@ -86,5 +86,6 @@ public class DBAdminFeatures extends DBWriterFactory {
 		User userToSend = usersFeatures.updateUser(user);
 		return userToSend;
 	}
+	
 
 }

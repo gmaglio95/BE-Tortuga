@@ -2,6 +2,10 @@ package it.tortuga.beans;
 
 public class IstitutoAllenamento extends GeneralBean {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5625372233935218989L;
 	private String nomeIstituto;
 	private String citta;
 	private String provincia;
@@ -47,6 +51,5 @@ public class IstitutoAllenamento extends GeneralBean {
 	public void setSquadraPresente(String squadraPresente) {
 		this.squadraPresente = squadraPresente;
 	}
-
 
 }
