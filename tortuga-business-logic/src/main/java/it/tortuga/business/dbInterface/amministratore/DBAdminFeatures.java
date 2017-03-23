@@ -3,7 +3,6 @@ package it.tortuga.business.dbInterface.amministratore;
 import java.util.List;
 
 import it.tortuga.beans.FilterGeneralBean;
-import it.tortuga.beans.GeneralBean;
 import it.tortuga.beans.IstitutoAllenamento;
 import it.tortuga.beans.Squadra;
 import it.tortuga.beans.User;
@@ -39,7 +38,7 @@ public class DBAdminFeatures extends DBWriterFactory {
 
 		return isDeleted;
 	}
-
+	
 	public User updateUser(User user) {
 
 		user = usersFeatures.updateUser(user);

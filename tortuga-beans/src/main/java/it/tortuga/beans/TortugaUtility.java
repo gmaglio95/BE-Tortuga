@@ -6,6 +6,8 @@ import java.security.NoSuchAlgorithmException;
 
 public class TortugaUtility {
 
+	public static final String BROKER_URL = "tcp://52.42.61.190:1883";
+
 	private TortugaUtility() {
 	}
 
@@ -21,6 +23,7 @@ public class TortugaUtility {
 	 * @return il nome del campo del valore fieldValue
 	 * 
 	 */
+
 	public static String getFieldName(Object fieldParent, Object fieldValue) {
 		String nameField = null;
 		for (Field field : fieldParent.getClass().getDeclaredFields()) {

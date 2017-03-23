@@ -3,9 +3,6 @@
  */
 package it.tortuga.business.dbInterface.amministratore;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bson.Document;
 
 import com.mongodb.BasicDBObject;
@@ -17,11 +14,7 @@ import it.tortuga.beans.IstitutoAllenamento;
 import it.tortuga.beans.Squadra;
 import it.tortuga.beans.TortugaUtility;
 import it.tortuga.beans.User;
-import it.tortuga.business.configuration.MapperBeans;
 import it.tortuga.business.dbInterface.DBWriterFactory;
-import it.tortuga.business.document.bean.DocumentIstitutoAllenamentoDTO;
-import it.tortuga.business.document.bean.DocumentSquadraDTO;
-import it.tortuga.business.document.bean.DocumentUserDTO;
 
 /**
  * @author pc ads

@@ -37,14 +37,12 @@ public abstract class GeneralBean implements Serializable {
 	@Override
 	public boolean equals(Object obj) {
 		boolean isEquals = false;
-		if (obj instanceof User) {
-			User objUser = (User) obj;
+		if (obj instanceof GeneralBean) {
+			GeneralBean objUser = (GeneralBean) obj;
 			if (objUser.get_id().equals(this.get_id())) {
 				isEquals = true;
 			}
-
 		}
-
 		return isEquals;
 	}
 }

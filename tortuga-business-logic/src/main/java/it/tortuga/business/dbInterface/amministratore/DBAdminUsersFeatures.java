@@ -88,6 +88,7 @@ public class DBAdminUsersFeatures extends DBWriterFactory {
 	}
 
 	public User updateUser(User user) {
+		user.setPassword(TortugaUtility.getMD5Value(user.getPassword()));
 		BasicDBObject bsonFilter = new BasicDBObject(TortugaUtility.getFieldName(user, user.get_id()), user.get_id());
 		UpdateResult update = user_collection.replaceOne(bsonFilter, (BasicDBObject) JSON.parse(gson.toJson(user)));
 		return getUserById(user);

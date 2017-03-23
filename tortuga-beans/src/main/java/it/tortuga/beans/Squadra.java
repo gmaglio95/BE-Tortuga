@@ -5,10 +5,15 @@ import java.util.List;
 
 public class Squadra extends GeneralBean {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5344573975843017340L;
 	private String nomeSquadra;
 	private Date dataCreazione;
-	private List<String> listaPartecipanti;
+	private List<User> listaPartecipanti;
 	private IstitutoAllenamento istitutoAppartenenza;
+	private CalendarioMatch calendario;
 
 	public String getNomeSquadra() {
 		return nomeSquadra;
@@ -34,11 +39,19 @@ public class Squadra extends GeneralBean {
 		this.istitutoAppartenenza = istitutoAppartenenza;
 	}
 
-	public List<String> getListaPartecipanti() {
+	public CalendarioMatch getCalendario() {
+		return calendario;
+	}
+
+	public void setCalendario(CalendarioMatch calendario) {
+		this.calendario = calendario;
+	}
+
+	public List<User> getListaPartecipanti() {
 		return listaPartecipanti;
 	}
 
-	public void setListaPartecipanti(List<String> listaPartecipanti) {
+	public void setListaPartecipanti(List<User> listaPartecipanti) {
 		this.listaPartecipanti = listaPartecipanti;
 	}
 

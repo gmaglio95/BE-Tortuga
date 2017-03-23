@@ -17,7 +17,7 @@ import it.tortuga.business.dbInterface.amministratore.DBAdminFeatures;
 
 @Controller
 @RequestMapping("spring")
-public class SpringController {
+public class SpringController{
 
 	private DBAdminFeatures factory = new DBAdminFeatures();
 
@@ -31,6 +31,12 @@ public class SpringController {
 	@ResponseBody
 	public User signUpUser(@RequestBody User user) {
 		return factory.insertNewUser(user);
+	}
+
+	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
+	@ResponseBody
+	public Boolean deleteUser(@RequestBody User user) {
+		return factory.deleteUser(user);
 	}
 
 	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
@@ -48,6 +54,7 @@ public class SpringController {
 		return beanChangeElement;
 	}
 
+	
 	@RequestMapping(value = "/userList", method = RequestMethod.POST)
 	@ResponseBody
 	public ListUsersBean userListByFilter(FilterGeneralBean generalFilter) {
