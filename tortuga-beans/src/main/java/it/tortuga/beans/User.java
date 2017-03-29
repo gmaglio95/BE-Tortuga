@@ -12,6 +12,15 @@ public class User extends GeneralBean {
 	private RuoloCampo ruolo;
 	private Date dataNacita;
 	private String squadraAppartenenza;
+	private ImageBean image;
+
+	public ImageBean getImage() {
+		return image;
+	}
+
+	public void setImage(ImageBean image) {
+		this.image = image;
+	}
 
 	public String getNome() {
 		return nome;

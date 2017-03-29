@@ -76,13 +76,35 @@ public class DBAdminTeamFeatures extends DBWriterFactory {
 	}
 
 	public Squadra updateTeam(Squadra updateTeam) {
+		IstitutoAllenamento istituto = new IstitutoAllenamento();
+		istituto.setSquadraPresente("prova");
 		BasicDBObject filter = new BasicDBObject(this.nameIdField, updateTeam.get_id());
+		Squadra teamPersisted = gson.fromJson(team_collection.find(filter).first().toString(), Squadra.class);
 		BasicDBObject replaced = team_collection.findOneAndReplace(filter,
 				(BasicDBObject) JSON.parse(gson.toJson(updateTeam)));
-		if (replaced != null && updateTeam.getIstitutoAppartenenza() != null) {
-			filter = new BasicDBObject(this.nameIdField, updateTeam.getIstitutoAppartenenza().get_id());
+		if (replaced != null) {
+			filter = new BasicDBObject(istituto.getSquadraPresente(), updateTeam.get_id());
 			replaced = istituti_collection.findOneAndReplace(filter,
 					(BasicDBObject) JSON.parse(gson.toJson(updateTeam.getIstitutoAppartenenza())));
+			if (updateTeam.getListaPartecipanti() != null && teamPersisted.getListaPartecipanti() != null) {
+				List<User> users = updateTeam.getListaPartecipanti();
+				for (User user : users) {
+					if (!teamPersisted.getListaPartecipanti().contains(user)) {
+						filter = new BasicDBObject(this.nameIdField, user.get_id());
+						user_collection.updateOne(filter,
+								new Document("$set",
+										new Document(TortugaUtility.getFieldName(user, user.getSquadraAppartenenza()),
+												updateTeam.get_id())));
+					}
+				}
+
+					for (User user : teamPersisted.getListaPartecipanti()) {
+						if (!users.contains(user)) {
+							user_collection.updateOne(filter, new Document("$set", new Document(
+									TortugaUtility.getFieldName(user, user.getSquadraAppartenenza()), "")));
+						}
+					}
+			}
 		} else {
 			updateTeam = new Squadra();
 			updateTeam.setErrorDescriptors(new ErrorMessage("Update del team non riuscito"));

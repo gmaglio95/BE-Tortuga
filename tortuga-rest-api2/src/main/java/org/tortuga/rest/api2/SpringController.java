@@ -1,5 +1,10 @@
 package org.tortuga.rest.api2;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,9 +12,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import it.tortuga.beans.ElementToUpdateBean;
 import it.tortuga.beans.FilterGeneralBean;
+import it.tortuga.beans.ImageBean;
 import it.tortuga.beans.ListUsersBean;
 import it.tortuga.beans.TortugaUtility;
 import it.tortuga.beans.User;
@@ -17,7 +25,7 @@ import it.tortuga.business.dbInterface.amministratore.DBAdminFeatures;
 
 @Controller
 @RequestMapping("spring")
-public class SpringController{
+public class SpringController {
 
 	private DBAdminFeatures factory = new DBAdminFeatures();
 
@@ -54,7 +62,6 @@ public class SpringController{
 		return beanChangeElement;
 	}
 
-	
 	@RequestMapping(value = "/userList", method = RequestMethod.POST)
 	@ResponseBody
 	public ListUsersBean userListByFilter(FilterGeneralBean generalFilter) {
@@ -72,11 +79,12 @@ public class SpringController{
 	}
 
 	@RequestMapping(value = "/uploadImage", method = RequestMethod.POST)
-	public @ResponseBody String uploadMultipleFileHandler(@RequestParam("name") String[] names,
-			@RequestParam("filename") MultipartFile file) {
-		if (file != null && !file.isEmpty()) {
-			System.out.println("YEE");
-		}
+	@ResponseBody
+	public String uploadMultipleFileHandler(ImageBean imageToUpload) throws IOException {
+		FileOutputStream imageOutFile = new FileOutputStream("C:\\file.png");
+		imageOutFile.write(Base64.decodeBase64(imageToUpload.getImagesEncoded()));
+		imageOutFile.flush();
+		imageOutFile.close();
 		return "";
 	}
 

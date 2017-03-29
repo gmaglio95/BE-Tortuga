@@ -24,7 +24,7 @@ import it.tortuga.business.configuration.MongoDBConnectionInfo;
 public abstract class DBWriterFactory {
 
 	protected Gson gson;
-	private MongoClient client;
+	protected MongoClient client;
 	protected MongoDatabase db;
 
 	protected MongoCollection<BasicDBObject> user_collection;
@@ -35,25 +35,25 @@ public abstract class DBWriterFactory {
 
 	protected DBWriterFactory() {
 
-			JsonSerializer<Date> ser = new JsonSerializer<Date>() {
-				@Override
-				public JsonElement serialize(Date src, java.lang.reflect.Type typeOfSrc, JsonSerializationContext context) {
-					// TODO Auto-generated method stub
-					return src == null ? null : new JsonPrimitive(src.getTime());
-				}
-			};
-	
-			JsonDeserializer<Date> deser = new JsonDeserializer<Date>() {
-	
-				@Override
-				public Date deserialize(JsonElement json, java.lang.reflect.Type typeOfT,
-						JsonDeserializationContext context) throws JsonParseException {
-					return json == null ? null : new Date(json.getAsLong());
-				}
-			};
-	
-			this.gson = new GsonBuilder().registerTypeAdapter(Date.class, ser).registerTypeAdapter(Date.class, deser)
-					.create();
+		JsonSerializer<Date> ser = new JsonSerializer<Date>() {
+			@Override
+			public JsonElement serialize(Date src, java.lang.reflect.Type typeOfSrc, JsonSerializationContext context) {
+				// TODO Auto-generated method stub
+				return src == null ? null : new JsonPrimitive(src.getTime());
+			}
+		};
+
+		JsonDeserializer<Date> deser = new JsonDeserializer<Date>() {
+
+			@Override
+			public Date deserialize(JsonElement json, java.lang.reflect.Type typeOfT,
+					JsonDeserializationContext context) throws JsonParseException {
+				return json == null ? null : new Date(json.getAsLong());
+			}
+		};
+
+		this.gson = new GsonBuilder().registerTypeAdapter(Date.class, ser).registerTypeAdapter(Date.class, deser)
+				.create();
 		// TO SAVE ID GENERAL BEAN
 		User user = new User();
 		user.set_id("id");

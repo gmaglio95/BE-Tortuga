@@ -3,8 +3,11 @@
  */
 package org.tortuga.rest.api2;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
+import it.tortuga.beans.IstitutoAllenamento;
 import it.tortuga.beans.Squadra;
 import it.tortuga.beans.User;
 import it.tortuga.business.dbInterface.amministratore.DBAdminFeatures;
@@ -26,32 +29,45 @@ public class UnitFilterTest {
 
 	public void getTeam() {
 		Squadra team = admin.getTeamById(GeneralBeanExamples.getTeamExample().get_id(), false);
-		if(team.getErrorDescriptors()==null){
+		if (team.getErrorDescriptors() == null) {
 			System.out.println("TEAM RECOVER SUCCESFULLY");
 		}
 	}
-	public void deleteTeam(){
+
+	public void deleteTeam() {
 		Boolean team = admin.deleteTeam(GeneralBeanExamples.getTeamExample());
-		if(team){
+		if (team) {
 			System.out.println("TEAM DELETED");
 		}
 	}
-	
+
+	public void updateTeam() {
+		Squadra teamToUpdate = GeneralBeanExamples.getTeamExample();
+		teamToUpdate.setNomeSquadra("Vinova");
+//		teamToUpdate.setIstitutoAppartenenza(new IstitutoAllenamento().set);
+		teamToUpdate.setListaPartecipanti(new ArrayList<>());
+		Squadra team = admin.updateTeam(teamToUpdate);
+		if (team.getErrorDescriptors() == null) {
+			System.out.println("Team Updated");
+		}
+	}
+
 	@Test
 	public void CRUDSquadra() {
-		createTeam();
-		getTeam();
-		deleteTeam();
+//		createTeam();
+		// getTeam();
+		 updateTeam();
+		// deleteTeam();
 	}
 
 	@Test
 	public void CRUDUser() {
-//		createUser();
-//		deleteUser();
-//		createUser();
-//		updateUser();
-//		getUser();
-//		deleteUser();
+		// createUser();
+		// deleteUser();
+		// createUser();
+		// updateUser();
+		// getUser();
+		// deleteUser();
 	}
 
 	public void getUser() {

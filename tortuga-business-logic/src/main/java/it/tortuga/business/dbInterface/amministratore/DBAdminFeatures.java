@@ -25,6 +25,11 @@ public class DBAdminFeatures extends DBWriterFactory {
 		return usersFeatures.listUserByParameters(filter);
 	}
 
+	public Squadra updateTeam(Squadra teamToUpdate) {
+		Squadra teamToSend = teamFeatures.updateTeam(teamToUpdate);
+		return teamToSend;
+	}
+
 	public User insertNewUser(User user) {
 
 		user = usersFeatures.insertNewUser(user);
@@ -38,7 +43,7 @@ public class DBAdminFeatures extends DBWriterFactory {
 
 		return isDeleted;
 	}
-	
+
 	public User updateUser(User user) {
 
 		user = usersFeatures.updateUser(user);
@@ -86,6 +91,5 @@ public class DBAdminFeatures extends DBWriterFactory {
 		User userToSend = usersFeatures.updateUser(user);
 		return userToSend;
 	}
-	
 
 }

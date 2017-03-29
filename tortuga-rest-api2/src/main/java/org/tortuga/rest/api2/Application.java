@@ -14,14 +14,14 @@ public class Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
-		new MQTTBrokerThread().run();
+//		new MQTTBrokerThread().run();
 	}
 
 	@Bean(name = "multipartResolver")
 	public CommonsMultipartResolver createMultipartResolver() {
 		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
 		resolver.setDefaultEncoding("utf-8");
-		resolver.setMaxUploadSize(100000);
 		return resolver;
 	}
+	
 }
