@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,12 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.ModelAndView;
 
 import it.tortuga.beans.ElementToUpdateBean;
 import it.tortuga.beans.FilterGeneralBean;
-import it.tortuga.beans.ImageBean;
 import it.tortuga.beans.ListUsersBean;
 import it.tortuga.beans.TortugaUtility;
 import it.tortuga.beans.User;
@@ -80,11 +76,12 @@ public class SpringController {
 
 	@RequestMapping(value = "/uploadImage", method = RequestMethod.POST)
 	@ResponseBody
-	public String uploadMultipleFileHandler(ImageBean imageToUpload) throws IOException {
-		FileOutputStream imageOutFile = new FileOutputStream("C:\\file.png");
-		imageOutFile.write(Base64.decodeBase64(imageToUpload.getImagesEncoded()));
-		imageOutFile.flush();
-		imageOutFile.close();
+	public String uploadMultipleFileHandler(@RequestParam("imgFile") MultipartFile file) throws IOException {
+		System.out.println("===== Begin headers =====");
+		File saveInDirectory = new File("C:\\file.png");
+		FileOutputStream fop = new FileOutputStream(saveInDirectory);
+		fop.write(file.getBytes());
+		fop.close();
 		return "";
 	}
 

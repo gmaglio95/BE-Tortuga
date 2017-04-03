@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import it.tortuga.beans.IstitutoAllenamento;
 import it.tortuga.beans.Squadra;
 import it.tortuga.beans.User;
 import it.tortuga.business.dbInterface.amministratore.DBAdminFeatures;
